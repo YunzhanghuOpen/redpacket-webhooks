@@ -41,15 +41,15 @@ curl -X __POST__ -H "Content-Type: __application/json__" -d '{"notify_id":"14732
 
 ### 通知参数的数据格式
 
-```json
+```js
 {
-    notify_id: '14732279660721953',  # 消息编号
-    uid: 'foo01',                    # 商户平台下用户ID
-    partner: 123456,                 # 商户编号
-    appid: 8a48b5514fd49643014ff3,   # 商户在 SaaS 平台的 appid
-    trade_status: 'SEND_SUCCESS',    # 交易状态（触发条件）
+    notify_id: '14732279660721953',    # 消息编号
+    uid: 'foo01',                      # 商户平台下用户ID
+    partner: 123456,                   # 商户编号
+    appid: '8a48b5514fd49643014ff3',   # 商户在 SaaS 平台的 appid
+    trade_status: 'SEND_SUCCESS',      # 交易状态（触发条件）
     sign: '86faa539781bb20ba5d7182e00c760cd1dbfcfc612fd800e05727e0f2d2c875c',
-    data: {                          # 具体的业务参数，以发送红包为例
+    data: {                            # 具体的业务参数，以发送红包为例
         id: '1604051506e9e4c591859a2016488e794a44b533',
         message: '恭喜发财',                            
         recipient: 'userid001',                        
@@ -65,7 +65,7 @@ curl -X __POST__ -H "Content-Type: __application/json__" -d '{"notify_id":"14732
 
 #### 1 抢到红包 RECEIVE_SUCCESS
 
-```json
+```js
 data: {
     id: '1604051506e9e4c591859a2016488e794a44b533', # 红包ID
     myamount: 0.01                                  # 我抢到的钱
@@ -74,7 +74,7 @@ data: {
 
 #### 2 发出红包 SEND_SUCCESS
 
-```json
+```js
 data: {
     id: '1604051506e9e4c591859a2016488e794a44b533', # 红包ID
     message: '恭喜发财',                              #  红包留言
@@ -87,7 +87,7 @@ data: {
 
 #### 3 充值成功 RECHARGE_SUCCESS
 
-```json
+```js
 data: {
     amount: '1.00',                      # 充值金额
     datetime: '2016-09-08 12:21:44',     # 充值时间
