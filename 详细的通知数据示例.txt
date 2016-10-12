@@ -1,0 +1,26 @@
+# 商户签名参数
+partner = "123456"
+key     = "sdfasdfasdfasfasdfa"
+    
+# 签名过程
+------------- RECEIVE_SUCCESS ---------------
+排序前:{"notify_id":"14732279660721951","uid":"foo01","partner":"123456","appid":"abcdefg","trade_status":"RECEIVE_SUCCESS","sign":"","data":"{\"id\":\"1604051506e9e4c591859a2016488e794a44b533\",\"message\":\"\\u606d\\u559c\\u53d1\\u8d22\",\"recipient\":\"userid001\",\"amount\":\"1.00\",\"groupid\":\"\",\"count\":1}","create_time":"2016-09-12 18:30:54","notify_time":"2016-09-12 19:36:59"}
+排序后:{"appid":"abcdefg","create_time":"2016-09-12 18:30:54","data":"{\"id\":\"1604051506e9e4c591859a2016488e794a44b533\",\"message\":\"\\u606d\\u559c\\u53d1\\u8d22\",\"recipient\":\"userid001\",\"amount\":\"1.00\",\"groupid\":\"\",\"count\":1}","notify_id":"14732279660721951","notify_time":"2016-09-12 19:36:59","partner":"123456","sign":"","trade_status":"RECEIVE_SUCCESS","uid":"foo01"}
+签名原始串:appid=abcdefg&create_time=2016-09-12 18:30:54&data={"id":"1604051506e9e4c591859a2016488e794a44b533","message":"\u606d\u559c\u53d1\u8d22","recipient":"userid001","amount":"1.00","groupid":"","count":1}&notify_id=14732279660721951&notify_time=2016-09-12 19:36:59&partner=123456&trade_status=RECEIVE_SUCCESS&uid=foo01
+签名结果:0fdb35ef47cc002e2b7680a0bf0ce4f414b4fee58be7c2c64d4244b19da5a865
+云账户推送的数据:
+{"notify_id":"14732279660721951","uid":"foo01","partner":"123456","appid":"abcdefg","trade_status":"RECEIVE_SUCCESS","sign":"0fdb35ef47cc002e2b7680a0bf0ce4f414b4fee58be7c2c64d4244b19da5a865","data":"{\"id\":\"1604051506e9e4c591859a2016488e794a44b533\",\"message\":\"\\u606d\\u559c\\u53d1\\u8d22\",\"recipient\":\"userid001\",\"amount\":\"1.00\",\"groupid\":\"\",\"count\":1}","create_time":"2016-09-12 18:30:54","notify_time":"2016-09-12 19:36:59"}
+------------- SEND_SUCCESS ------------------
+排序前:{"notify_id":"14732279660721952","uid":"foo01","partner":"123456","appid":"abcdefg","trade_status":"SEND_SUCCESS","sign":"","data":"{\"id\":\"1604051506e9e4c591859a2016488e794a44b533\",\"myamount\":0.01}","create_time":"2016-09-12 18:30:54","notify_time":"2016-09-12 19:36:59"}
+排序后:{"appid":"abcdefg","create_time":"2016-09-12 18:30:54","data":"{\"id\":\"1604051506e9e4c591859a2016488e794a44b533\",\"myamount\":0.01}","notify_id":"14732279660721952","notify_time":"2016-09-12 19:36:59","partner":"123456","sign":"","trade_status":"SEND_SUCCESS","uid":"foo01"}
+签名原始串:appid=abcdefg&create_time=2016-09-12 18:30:54&data={"id":"1604051506e9e4c591859a2016488e794a44b533","myamount":0.01}&notify_id=14732279660721952&notify_time=2016-09-12 19:36:59&partner=123456&trade_status=SEND_SUCCESS&uid=foo01
+签名结果:f66c19230f31207490153a9a4e60c65c9ee4b8b5e00a57e560f66a978237a9d4
+云账户推送的数据:
+{"notify_id":"14732279660721952","uid":"foo01","partner":"123456","appid":"abcdefg","trade_status":"SEND_SUCCESS","sign":"f66c19230f31207490153a9a4e60c65c9ee4b8b5e00a57e560f66a978237a9d4","data":"{\"id\":\"1604051506e9e4c591859a2016488e794a44b533\",\"myamount\":0.01}","create_time":"2016-09-12 18:30:54","notify_time":"2016-09-12 19:36:59"}
+----------- RECHARGE_SUCCESS ----------------
+排序前:{"notify_id":"14732279660721952","uid":"foo01","partner":"123456","appid":"abcdefg","trade_status":"RECHARGE_SUCCESS","sign":"","data":"{\"amount\":\"1.00\",\"datetime\":\"2016-09-08 12:21:44\",\"ref\":\"151120185800437765\",\"channel\":\"JDPAY\"}","create_time":"2016-09-12 18:30:54","notify_time":"2016-09-12 19:36:59"}
+排序后:{"appid":"abcdefg","create_time":"2016-09-12 18:30:54","data":"{\"amount\":\"1.00\",\"datetime\":\"2016-09-08 12:21:44\",\"ref\":\"151120185800437765\",\"channel\":\"JDPAY\"}","notify_id":"14732279660721952","notify_time":"2016-09-12 19:36:59","partner":"123456","sign":"","trade_status":"RECHARGE_SUCCESS","uid":"foo01"}
+签名原始串:appid=abcdefg&create_time=2016-09-12 18:30:54&data={"amount":"1.00","datetime":"2016-09-08 12:21:44","ref":"151120185800437765","channel":"JDPAY"}&notify_id=14732279660721952&notify_time=2016-09-12 19:36:59&partner=123456&trade_status=RECHARGE_SUCCESS&uid=foo01
+签名结果:26036abcbc76af94a128ea9efb2d5fef2d689d90a70cc526a419eb458331aee3
+云账户的推送数据:
+{"notify_id":"14732279660721952","uid":"foo01","partner":"123456","appid":"abcdefg","trade_status":"RECHARGE_SUCCESS","sign":"26036abcbc76af94a128ea9efb2d5fef2d689d90a70cc526a419eb458331aee3","data":"{\"amount\":\"1.00\",\"datetime\":\"2016-09-08 12:21:44\",\"ref\":\"151120185800437765\",\"channel\":\"JDPAY\"}","create_time":"2016-09-12 18:30:54","notify_time":"2016-09-12 19:36:59"}
