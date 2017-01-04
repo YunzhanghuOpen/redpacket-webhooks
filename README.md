@@ -1,6 +1,10 @@
-# 红包消息推送v1.0.2
+# 红包消息推送v1.1.0
 
 ## 版本历史
+v1.1.0 2017年01月04日
+
+* 增加消息类型：红包过期退回、身份证审核结果
+
 v1.0.2 2016年09月13日
 
 * 充值类型通知增加了支付渠道
@@ -28,10 +32,12 @@ curl -X __POST__ -H "Content-Type: __application/json__" -d '{"notify_id":"14732
 ## 通知触发条件
 
 |触发条件（交易状态）|描述|
-|-----------------|-------|
-|RECEIVE_SUCCESS  |抢到红包|
-|SEND_SUCCESS     |发出红包|
-|RECHARGE_SUCCESS |充值成功|
+|-----------------|------------|
+|RECEIVE_SUCCESS  |抢到红包     |
+|SEND_SUCCESS     |发出红包     |
+|RECHARGE_SUCCESS |充值成功     |
+|REBACK_SUCCESS   |退回成功     |
+|VERIFY_RESULT    |身份证审核结果|
 
 ## 通知地址配置
 
@@ -41,15 +47,15 @@ curl -X __POST__ -H "Content-Type: __application/json__" -d '{"notify_id":"14732
 
 ### 通知参数的数据格式
 
-```js
+```json
 {
-    notify_id: '14732279660721953',    # 消息编号
-    uid: 'foo01',                      # 商户平台下用户ID
-    partner: 123456,                   # 商户编号
-    appid: '8a48b5514fd49643014ff3',   # 商户在 SaaS 平台的 appid
-    trade_status: 'SEND_SUCCESS',      # 交易状态（触发条件）
+    notify_id: '14732279660721953',  # 消息编号
+    uid: 'foo01',                    # 商户平台下用户ID
+    partner: 123456,                 # 商户编号
+    appid: 8a48b5514fd49643014ff3,   # 商户在 SaaS 平台的 appid
+    trade_status: 'SEND_SUCCESS',    # 交易状态（触发条件）
     sign: '86faa539781bb20ba5d7182e00c760cd1dbfcfc612fd800e05727e0f2d2c875c',
-    data: {                            # 具体的业务参数，以发送红包为例
+    data: {                          # 具体的业务参数，以发送红包为例
         id: '1604051506e9e4c591859a2016488e794a44b533',
         message: '恭喜发财',                            
         recipient: 'userid001',                        
@@ -65,7 +71,7 @@ curl -X __POST__ -H "Content-Type: __application/json__" -d '{"notify_id":"14732
 
 #### 1 抢到红包 RECEIVE_SUCCESS
 
-```js
+```json
 data: {
     id: '1604051506e9e4c591859a2016488e794a44b533', # 红包ID
     myamount: 0.01                                  # 我抢到的钱
@@ -74,10 +80,10 @@ data: {
 
 #### 2 发出红包 SEND_SUCCESS
 
-```js
+```json
 data: {
     id: '1604051506e9e4c591859a2016488e794a44b533', # 红包ID
-    message: '恭喜发财',                              #  红包留言
+    message: '恭喜发财',                             #  红包留言
     recipient: 'userid001',                         # 接收人ID
     amount: '1.00',                                 # 红包金额
     groupid: '',                                    # 群ID
@@ -87,12 +93,36 @@ data: {
 
 #### 3 充值成功 RECHARGE_SUCCESS
 
-```js
+```json
 data: {
     amount: '1.00',                      # 充值金额
     datetime: '2016-09-08 12:21:44',     # 充值时间
     ref: '151120185800437765',           # 充值流水号         
     channel: 'JDPAY',                    # 支付渠道，取值[JDPAY,ALIPAY,WECHAT]
+},
+```
+
+#### 4 退款成功 REBACK_SUCCESS
+
+```json
+data: {
+    id: '1604051506e9e4c591859a2016488e794a44b533', # 红包ID
+    amount: '1.00',                                 # 红包金额
+    reback_amount: '1.00',                          # 退回金额
+    groupid: '',                                    # 群ID
+    count: 1                                        # 红包数量
+    rest_count: 1                                   # 未领取数量
+},
+```
+
+#### 5 身份证审核结果 VERIFY_RESULT
+
+```json
+data: {
+    name: '张三',                         # 姓名
+    card_no: '110101198104130234',       # 身份证号
+    status: 1,                           # 审核结果，取值[0未验证 1已验证 2验证失败 3审核中]
+    message: '审核通过',                  # 审核说明，举例 “请上传您本人的身份证照片”
 },
 ```
 
@@ -103,29 +133,29 @@ data: {
 ### 验证签名
 
 1. 待签名参数集合
-	
-	除了 sign 及 sign_type 以外，获得的参数集合都是要参与签名的。
-	一般情况下，通知里的参数都是有值的，空值的参数不会出现。
+    
+    除了 sign 及 sign_type 以外，获得的参数集合都是要参与签名的。
+    一般情况下，通知里的参数都是有值的，空值的参数不会出现。
 
 1. 组装
-	1. 排序
+    1. 排序
 
-		除 sign、sign_type 字段外，所有参数按照字段名（KEY）的ASCII码从小到大排序
-		
-	2. 拼接
+        除 sign、sign_type 字段外，所有参数按照字段名（KEY）的ASCII码从小到大排序
+        
+    2. 拼接
 
-		排序后所有字段以 key1=value1&key2=value2 格式进行拼接
-		
+        排序后所有字段以 key1=value1&key2=value2 格式进行拼接
+        
 1. 调用签名验证函数 HMAC
 
-	```php
-	# appkey 为云账户提供的通讯密钥
-	$hash = hmac('sha256', $message, $appkey);
-	```
-	
+    ```php
+    # appkey 为云账户提供的通讯密钥
+    $hash = hmac('sha256', $message, $appkey);
+    ```
+    
 1. 签名示例
 
-	见另一文档[《详细的通知数据示例.txt》](详细的通知数据示例.txt)
+    见另一文档《详细的通知数据示例.txt》
 
 ### 数据处理注意事项
 
