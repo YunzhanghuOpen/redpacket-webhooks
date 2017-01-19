@@ -37,7 +37,7 @@ curl -X __POST__ -H "Content-Type: __application/json__" -d '{"notify_id":"14732
 |SEND_SUCCESS     |发出红包     |
 |RECHARGE_SUCCESS |充值成功     |
 |REBACK_SUCCESS   |退回成功     |
-|VERIFY_RESULT    |身份证审核结果|
+|IDVERIFY_RESULT    |身份证审核结果|
 
 ## 通知地址配置
 
@@ -115,7 +115,7 @@ data: {
 },
 ```
 
-#### 5 身份证审核结果 VERIFY_RESULT
+#### 5 身份证审核结果 IDVERIFY_RESULT
 
 ```js
 data: {
@@ -133,29 +133,29 @@ data: {
 ### 验证签名
 
 1. 待签名参数集合
-	
-	除了 sign 及 sign_type 以外，获得的参数集合都是要参与签名的。
-	一般情况下，通知里的参数都是有值的，空值的参数不会出现。
+    
+    除了 sign 及 sign_type 以外，获得的参数集合都是要参与签名的。
+    一般情况下，通知里的参数都是有值的，空值的参数不会出现。
 
 1. 组装
-	1. 排序
+    1. 排序
 
-		除 sign、sign_type 字段外，所有参数按照字段名（KEY）的ASCII码从小到大排序
-		
-	2. 拼接
+        除 sign、sign_type 字段外，所有参数按照字段名（KEY）的ASCII码从小到大排序
+        
+    2. 拼接
 
-		排序后所有字段以 key1=value1&key2=value2 格式进行拼接
-		
+        排序后所有字段以 key1=value1&key2=value2 格式进行拼接
+        
 1. 调用签名验证函数 HMAC
 
-	```php
-	# appkey 为云账户提供的通讯密钥
-	$hash = hmac('sha256', $message, $appkey);
-	```
-	
+    ```php
+    # appkey 为云账户提供的通讯密钥
+    $hash = hmac('sha256', $message, $appkey);
+    ```
+    
 1. 签名示例
 
-	见另一文档《详细的通知数据示例.txt》
+    见另一文档《详细的通知数据示例.txt》
 
 ### 数据处理注意事项
 
@@ -167,4 +167,5 @@ data: {
 
 程序执行完后必须打印输出 __success__。如果商户反馈给云账户的字符不是 __success__ 这7个字符，云账户服务器会不断重发通知，直到超过24小时22分钟。
 一般情况下，25小时以内完成8次通知（通知的间隔频率一般是：4m,10m,10m,1h,2h,6h,15h）
-
+ 
+    trade_status: 'SEND_SUCCESS',    # 交易状态（触发条件）
