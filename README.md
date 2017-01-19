@@ -28,6 +28,8 @@ v1.0 2016年09月09日
 
 curl -X __POST__ -H "Content-Type: __application/json__" -d '{"notify_id":"14732279660721952","uid":"foo01","partner":"123456","appid":"abcdefg","trade_status":"RECHARGE_SUCCESS","sign":"25892892e2806066fa852381c2d7707ee9d25c4eb91e529881dd101e849edecf","data":"{\"amount\":\"1.00\",\"datetime\":\"2016-09-08 12:21:44\",\"ref\":\"151120185800437765\"}","create_time":"2016-09-12 18:30:54","notify_time":"2016-09-12 19:36:59"}' "https://foo.bar/getnotice/stuff"
 
+> 注意：data 的内容经过 json encode，请解析后使用。
+
 
 ## 通知触发条件
 
@@ -167,5 +169,4 @@ data: {
 
 程序执行完后必须打印输出 __success__。如果商户反馈给云账户的字符不是 __success__ 这7个字符，云账户服务器会不断重发通知，直到超过24小时22分钟。
 一般情况下，25小时以内完成8次通知（通知的间隔频率一般是：4m,10m,10m,1h,2h,6h,15h）
- 
-    trade_status: 'SEND_SUCCESS',    # 交易状态（触发条件）
+
