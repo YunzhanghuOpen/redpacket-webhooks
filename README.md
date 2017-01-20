@@ -39,11 +39,8 @@ curl -X __POST__ -H "Content-Type: __application/json__" -d '{"notify_id":"14732
 |SEND_SUCCESS     |发出红包     |
 |RECHARGE_SUCCESS |充值成功     |
 |REBACK_SUCCESS   |退回成功     |
-|IDVERIFY_RESULT    |身份证审核结果|
-
-## 通知地址配置
-
-商户后台有地方填写不同的触发条件对应的地址。
+|IDVERIFY_RESULT  |身份证审核结果|
+|WITHDRAW_SUCCESS |提现成功     |
 
 ## 通知参数
 
@@ -104,7 +101,7 @@ data: {
 },
 ```
 
-#### 4 退款成功 REBACK_SUCCESS
+#### 4 退回成功 REBACK_SUCCESS
 
 ```js
 data: {
@@ -125,6 +122,15 @@ data: {
     card_no: '110101198104130234',       # 身份证号
     status: 1,                           # 审核结果，取值[0未验证 1已验证 2验证失败 3审核中]
     message: '审核通过',                  # 审核说明，举例 “请上传您本人的身份证照片”
+},
+```
+
+#### 5 提现成功 WITHDRAW_SUCCESS
+
+```js
+data: {
+    amount: '100.1',                         # 提现金额
+    datetime: '2017-01-20 11:49:04',         # 提现日期
 },
 ```
 
