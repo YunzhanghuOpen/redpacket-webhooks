@@ -37,6 +37,7 @@ curl -X __POST__ -H "Content-Type: __application/json__" -d '{"notify_id":"14732
 |-----------------|------------|
 |RECEIVE_SUCCESS  |抢到红包     |
 |SEND_SUCCESS     |发出红包     |
+|TRANSFER_SUCCESS |转账成功     |
 |RECHARGE_SUCCESS |充值成功     |
 |REBACK_SUCCESS   |退回成功     |
 |IDVERIFY_RESULT  |身份证审核结果|
@@ -73,7 +74,7 @@ curl -X __POST__ -H "Content-Type: __application/json__" -d '{"notify_id":"14732
 ```js
 data: {
     id: '1604051506e9e4c591859a2016488e794a44b533', # 红包ID
-    myamount: 0.01                                  # 我抢到的钱
+    myamount: 1                                     # 我抢到的钱，单位分
 },
 ```
 
@@ -84,29 +85,40 @@ data: {
     id: '1604051506e9e4c591859a2016488e794a44b533', # 红包ID
     message: '恭喜发财',                             #  红包留言
     recipient: 'userid001',                         # 接收人ID
-    amount: '1.00',                                 # 红包金额
+    amount: 17,                                     # 红包金额，单位分
     groupid: '',                                    # 群ID
     count: 1                                        # 红包数量
 },
 ```
 
-#### 3 充值成功 RECHARGE_SUCCESS
+#### 3 转账成功 TRANSFER_SUCCESS
+
+```js
+{
+    id: '50436485609488384',                       # 转账编号
+    message: '[转账]',                              # 转账提示语
+    recipient: '18614067032',                      # 接收人ID
+    amount: '100'                                  # 转账金额，单位分
+}
+```
+
+#### 4 充值成功 RECHARGE_SUCCESS
 
 ```js
 data: {
-    amount: '1.00',                      # 充值金额
+    amount: '1.00',                      # 充值金额，单位元
     datetime: '2016-09-08 12:21:44',     # 充值时间
     ref: '151120185800437765',           # 充值流水号         
     channel: 'JDPAY',                    # 支付渠道，取值[JDPAY,ALIPAY,WECHAT]
 },
 ```
 
-#### 4 退回成功 REBACK_SUCCESS
+#### 5 退回成功 REBACK_SUCCESS
 
 ```js
 data: {
     id: '1604051506e9e4c591859a2016488e794a44b533', # 红包ID
-    amount: '1.00',                                 # 红包金额
+    amount: '1.00',                                 # 红包金额，单位元
     reback_amount: '1.00',                          # 退回金额
     groupid: '',                                    # 群ID
     count: 1                                        # 红包数量
@@ -114,7 +126,7 @@ data: {
 },
 ```
 
-#### 5 身份证审核结果 IDVERIFY_RESULT
+#### 6 身份证审核结果 IDVERIFY_RESULT
 
 ```js
 data: {
@@ -125,11 +137,11 @@ data: {
 },
 ```
 
-#### 5 提现成功 WITHDRAW_SUCCESS
+#### 7 提现成功 WITHDRAW_SUCCESS
 
 ```js
 data: {
-    amount: '100.1',                         # 提现金额
+    amount: '100.1',                         # 提现金额，单位元
     datetime: '2017-01-20 11:49:04',         # 提现日期
 },
 ```
