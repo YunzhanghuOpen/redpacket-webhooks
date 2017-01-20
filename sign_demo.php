@@ -16,9 +16,9 @@ ksort($params);
 
 $signStr = '';
 foreach($params as $k => $val) {
-		if ($k != 'sign' && $k != 'sign_type' && $val != '') {
-				$signStr .= $k . '=' . $val . '&';
-		}
+	if ($k != 'sign' && $k != 'sign_type' && $val != '') {
+		$signStr .= $k . '=' . $val . '&';
+	}
 }
 $signStr = substr($signStr, 0, -1);
 echo sprintf("签名原始串: %s \n", $signStr);
@@ -29,7 +29,7 @@ echo sprintf("hmac 签名结果: %s \n", $hash);
 
 # 比较签名
 if ($hash == $params['sign']) {
-		echo sprintf("签名匹配 \n");
+	echo sprintf("签名匹配 \n");
 } else {
-		echo sprintf("签名不匹配 \n");
+	echo sprintf("签名不匹配 \n");
 }
