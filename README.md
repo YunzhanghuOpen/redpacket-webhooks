@@ -2,6 +2,10 @@
 
 ## 版本历史
 
+v1.3.0 2017年02月20日
+
+* 增加消息类型：发出营销红包
+
 v1.2.0 2017年01月22日
 
 * 增加消息类型：提现成功、转账成功
@@ -47,6 +51,7 @@ curl -X __POST__ -H "Content-Type: __application/json__" -d '{"notify_id":"14732
 |REBACK_SUCCESS   |退回成功     |
 |IDVERIFY_RESULT  |身份证审核结果|
 |WITHDRAW_SUCCESS |提现成功     |
+|SEND_AD_SUCCESS  |发出营销红包  |
 
 ## 通知参数
 
@@ -149,6 +154,18 @@ data: {
     amount: '100.1',                         # 提现金额，单位元
     ref: '151120185800437765',               # 提现流水号       
     datetime: '2017-01-20 11:49:04',         # 提现日期
+},
+```
+
+#### 8 发出营销红包 SEND_AD_SUCCESS
+
+```js
+data: {
+    id: '56085188955340800',                        # 红包ID
+    message: '恭喜发财',                             # 红包留言
+    recipient: 'http://yzh-test.oss-cn-qdjbp-a.aliyuncs.com/bd7b291b19b170a424d5718aa9ff95db.csv?OSSAccessKeyId=LTAIdARoqg48v3sJ\u0026Expires=1487604368\u0026Signature=RbUII2o7FXZ2XPz53%2Foe0bRK5DY%3D', # 接收人文件
+    amount: 100,                                    # 红包金额，单位分
+    count: 100                                      # 红包数量
 },
 ```
 
